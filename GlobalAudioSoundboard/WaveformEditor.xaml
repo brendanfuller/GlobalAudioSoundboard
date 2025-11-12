@@ -73,6 +73,16 @@
                         Background="Transparent"
                         ClipToBounds="True"/>
 
+                <!-- Left Gray Overlay (before start) -->
+                <Rectangle x:Name="LeftOverlay"
+                           Fill="#80000000"
+                           IsHitTestVisible="False"/>
+
+                <!-- Right Gray Overlay (after end) -->
+                <Rectangle x:Name="RightOverlay"
+                           Fill="#80000000"
+                           IsHitTestVisible="False"/>
+
                 <!-- Start Time Marker -->
                 <Line x:Name="StartMarker"
                       Stroke="#4CAF50"
@@ -198,14 +208,14 @@
                            Width="40"/>
             </StackPanel>
 
-            <!-- Play/Stop Buttons -->
+            <!-- Play/Stop Button -->
             <StackPanel Grid.Column="1"
                         Orientation="Horizontal"
                         HorizontalAlignment="Center">
-                <Button Content="▶ Play Preview"
-                        Click="Preview_Click"
+                <Button x:Name="PlayStopButton"
+                        Content="▶ Play Preview"
+                        Click="PlayStop_Click"
                         Padding="20,10"
-                        Margin="0,0,10,0"
                         Background="#4CAF50">
                     <Button.Style>
                         <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
@@ -214,22 +224,6 @@
                             <Style.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter Property="Background" Value="#45a049"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                </Button>
-                <Button Content="■ Stop"
-                        Click="Stop_Click"
-                        Padding="20,10"
-                        Background="#F44336">
-                    <Button.Style>
-                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-                            <Setter Property="Background" Value="#F44336"/>
-                            <Setter Property="Foreground" Value="White"/>
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#da190b"/>
                                 </Trigger>
                             </Style.Triggers>
                         </Style>

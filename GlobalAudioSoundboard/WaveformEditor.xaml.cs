@@ -105,7 +105,7 @@ namespace GlobalAudioSoundboard
             if (width <= 0 || height <= 0)
                 return;
 
-            // Calculate position relative to total duration
+            // Calculate position relative to total duration (currentPosition is absolute from file start)
             double positionX = (currentPosition.TotalSeconds / _sound.Duration.TotalSeconds) * width;
 
             PositionMarker.X1 = positionX;
@@ -234,6 +234,14 @@ namespace GlobalAudioSoundboard
             EndMarker.X1 = endX;
             EndMarker.X2 = endX;
             EndMarker.Y2 = height;
+
+            // Update gray overlays
+            LeftOverlay.Width = startX;
+            LeftOverlay.Height = height;
+
+            RightOverlay.Width = width - endX;
+            RightOverlay.Height = height;
+            Canvas.SetLeft(RightOverlay, endX);
         }
 
         private void WaveformCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -356,24 +364,31 @@ namespace GlobalAudioSoundboard
             UpdateMarkers();
         }
 
-        private void Preview_Click(object sender, RoutedEventArgs e)
+        private void PlayStop_Click(object sender, RoutedEventArgs e)
         {
-            _audioPlayer.StopAll();
-            float previewVolume = (float)VolumeSlider.Value;
-            _currentPlaybackId = _audioPlayer.PlaySegment(_sound.FilePath, previewVolume, StartTime, EndTime, OnPreviewStopped);
-
-            if (!string.IsNullOrEmpty(_currentPlaybackId))
+            if (_currentPlaybackId != null)
             {
-                _positionTimer?.Start();
+                // Stop playback
+                _audioPlayer.StopAll();
+                _positionTimer?.Stop();
+                _currentPlaybackId = null;
+                PositionMarker.Visibility = Visibility.Collapsed;
+                PlayStopButton.Content = "▶ Play Preview";
+                PlayStopButton.Background = new SolidColorBrush(Color.FromRgb(76, 175, 80)); // Green
             }
-        }
+            else
+            {
+                // Start playback
+                float previewVolume = (float)VolumeSlider.Value;
+                _currentPlaybackId = _audioPlayer.PlaySegment(_sound.FilePath, previewVolume, StartTime, EndTime, OnPreviewStopped);
 
-        private void Stop_Click(object sender, RoutedEventArgs e)
-        {
-            _audioPlayer.StopAll();
-            _positionTimer?.Stop();
-            _currentPlaybackId = null;
-            PositionMarker.Visibility = Visibility.Collapsed;
+                if (!string.IsNullOrEmpty(_currentPlaybackId))
+                {
+                    _positionTimer?.Start();
+                    PlayStopButton.Content = "■ Stop Preview";
+                    PlayStopButton.Background = new SolidColorBrush(Color.FromRgb(244, 67, 54)); // Red
+                }
+            }
         }
 
         private void OnPreviewStopped()
@@ -383,6 +398,8 @@ namespace GlobalAudioSoundboard
                 _positionTimer?.Stop();
                 _currentPlaybackId = null;
                 PositionMarker.Visibility = Visibility.Collapsed;
+                PlayStopButton.Content = "▶ Play Preview";
+                PlayStopButton.Background = new SolidColorBrush(Color.FromRgb(76, 175, 80)); // Green
             });
         }
 
@@ -396,6 +413,9 @@ namespace GlobalAudioSoundboard
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
+            // Update the sound's duration to reflect the edited selection
+            _sound.Duration = EndTime - StartTime;
+
             DialogResult = true;
             Close();
         }
