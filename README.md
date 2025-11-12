@@ -8,15 +8,19 @@ A Windows desktop application for playing audio files with global keyboard short
 - **Volume Control**: Individual volume slider for each sound
 - **Global Hotkeys**: Assign keyboard shortcuts to play sounds from anywhere
 - **Sound Management**: Play and delete sounds with confirmation
-- **Auto-Import**: Sounds are copied to a local folder for persistence
+- **Local Copy**: Sounds are copied to a local folder for persistence
 - **Configuration**: All settings saved in a config file next to the executable
+- **Theme**: Respects browser theme choice for light and dark themes
 
 ## Requirements
 
-- Windows 10 or later
-- .NET 8.0 SDK (automatically installed by setup.bat)
+- Windows 10 or later 
 
-## Installation & Build
+## Releases
+
+Check the releas tab to download the latest version. 
+
+## Build Process
 
 ### First-Time Setup
 
@@ -51,9 +55,3 @@ A Windows desktop application for playing audio files with global keyboard short
 - **Config File**: `Data/config.json` (next to the .exe)
 - All imported audio files are stored in the Sounds folder
 - Configuration is automatically saved when changes are made
-
-## Notes
-
-- ESC key cannot be assigned as a hotkey (it's used to confirm hotkey assignment)
-- Global hotkeys require at least one modifier key (Ctrl/Alt/Shift/Win)
-- If a hotkey is already in use by another application, you'll be notified
