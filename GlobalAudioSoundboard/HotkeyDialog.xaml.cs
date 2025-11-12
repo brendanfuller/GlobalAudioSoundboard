@@ -1,9 +1,9 @@
 using System;
 using System.Windows;
 using System.Windows.Input;
-using GlobalAudio.Services;
+using GlobalAudioSoundboard.Services;
 
-namespace GlobalAudio
+namespace GlobalAudioSoundboard
 {
     public partial class HotkeyDialog : Window
     {

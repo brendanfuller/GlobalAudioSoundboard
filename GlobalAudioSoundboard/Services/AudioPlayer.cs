@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using NAudio.Wave;
 
-namespace GlobalAudio.Services
+namespace GlobalAudioSoundboard.Services
 {
     public class AudioPlayer : IDisposable
     {

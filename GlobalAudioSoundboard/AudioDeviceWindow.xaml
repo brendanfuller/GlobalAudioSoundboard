@@ -1,4 +1,4 @@
-<Window x:Class="GlobalAudio.AudioDeviceWindow"
+<Window x:Class="GlobalAudioSoundboard.AudioDeviceWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Select Output Devices" Height="450" Width="500"

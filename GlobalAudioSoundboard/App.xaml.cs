@@ -1,6 +1,6 @@
 using System.Windows;
 
-namespace GlobalAudio
+namespace GlobalAudioSoundboard
 {
     public partial class App : Application
     {

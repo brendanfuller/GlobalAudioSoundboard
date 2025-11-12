@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace GlobalAudio.Models
+namespace GlobalAudioSoundboard.Models
 {
     public class SoundItem : INotifyPropertyChanged
     {

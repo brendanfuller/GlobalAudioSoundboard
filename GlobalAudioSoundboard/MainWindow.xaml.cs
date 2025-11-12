@@ -6,11 +6,11 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
-using GlobalAudio.Models;
-using GlobalAudio.Services;
+using GlobalAudioSoundboard.Models;
+using GlobalAudioSoundboard.Services;
 using Microsoft.Win32;
 
-namespace GlobalAudio
+namespace GlobalAudioSoundboard
 {
     public partial class MainWindow : Window
     {

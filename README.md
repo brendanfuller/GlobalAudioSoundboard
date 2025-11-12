@@ -28,7 +28,7 @@ A Windows desktop application for playing audio files with global keyboard short
 ### Building the Application
 
 2. Run `build.bat` to compile the application
-   - The executable will be in: `GlobalAudio\bin\Release\net8.0-windows\GlobalAudio.exe`
+   - The executable will be in: `GlobalAudioSoundboard\bin\Release\net8.0-windows\GlobalAudioSoundboard.exe`
 
 ### Running the Application
 

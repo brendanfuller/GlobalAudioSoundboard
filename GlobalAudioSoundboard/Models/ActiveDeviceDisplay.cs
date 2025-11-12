@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace GlobalAudio.Models
+namespace GlobalAudioSoundboard.Models
 {
     public class ActiveDeviceDisplay : INotifyPropertyChanged
     {

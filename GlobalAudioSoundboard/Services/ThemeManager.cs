@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Media;
 using Microsoft.Win32;
 
-namespace GlobalAudio.Services
+namespace GlobalAudioSoundboard.Services
 {
     public static class ThemeManager
     {

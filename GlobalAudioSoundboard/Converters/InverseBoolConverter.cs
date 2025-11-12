@@ -2,7 +2,7 @@ using System;
 using System.Globalization;
 using System.Windows.Data;
 
-namespace GlobalAudio.Converters
+namespace GlobalAudioSoundboard.Converters
 {
     public class InverseBoolConverter : IValueConverter
     {

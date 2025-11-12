@@ -4,7 +4,7 @@ echo Running Global Audio Soundboard...
 echo ================================================
 echo.
 
-cd GlobalAudio
+cd GlobalAudioSoundboard
 dotnet run
 
 if %errorlevel% neq 0 (

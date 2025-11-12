@@ -3,9 +3,9 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using GlobalAudio.Services;
+using GlobalAudioSoundboard.Services;
 
-namespace GlobalAudio
+namespace GlobalAudioSoundboard
 {
     public partial class AudioDeviceWindow : Window
     {

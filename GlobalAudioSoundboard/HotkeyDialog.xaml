@@ -1,4 +1,4 @@
-<Window x:Class="GlobalAudio.HotkeyDialog"
+<Window x:Class="GlobalAudioSoundboard.HotkeyDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Assign Hotkey" Height="320" Width="500"

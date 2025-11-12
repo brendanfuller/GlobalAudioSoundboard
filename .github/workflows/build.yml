@@ -21,19 +21,19 @@ jobs:
         dotnet-version: '8.0.x'
 
     - name: Restore dependencies
-      run: dotnet restore GlobalAudio.sln
+      run: dotnet restore GlobalAudioSoundboard.sln
 
     - name: Build solution
-      run: dotnet build GlobalAudio.sln -c Release --no-restore
+      run: dotnet build GlobalAudioSoundboard.sln -c Release --no-restore
 
     - name: Publish single-file executable
       run: |
-        cd GlobalAudio
+        cd GlobalAudioSoundboard
         dotnet publish -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true /p:IncludeNativeLibrariesForSelfExtract=true /p:EnableCompressionInSingleFile=true
 
     - name: Upload build artifact
       uses: actions/upload-artifact@v4
       with:
-        name: GlobalAudio-win-x64
-        path: GlobalAudio/bin/Release/net8.0-windows/win-x64/publish/GlobalAudio.exe
+        name: GlobalAudioSoundboard-win-x64
+        path: GlobalAudioSoundboard/bin/Release/net8.0-windows/win-x64/publish/GlobalAudioSoundboard.exe
         if-no-files-found: error

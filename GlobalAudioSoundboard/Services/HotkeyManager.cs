@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
 
-namespace GlobalAudio.Services
+namespace GlobalAudioSoundboard.Services
 {
     public class HotkeyManager : IDisposable
     {
