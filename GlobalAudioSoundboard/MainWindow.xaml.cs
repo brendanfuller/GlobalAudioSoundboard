@@ -231,7 +231,12 @@ namespace GlobalAudioSoundboard
                 {
                     // Play the sound (allow multiple simultaneous sounds)
                     sound.IsPlaying = true;
-                    var playbackId = _audioPlayer.Play(sound.FilePath, sound.Volume, () =>
+
+                    // Use custom start/end times if set, otherwise play full audio
+                    TimeSpan startTime = sound.StartTime;
+                    TimeSpan endTime = sound.EndTime > TimeSpan.Zero ? sound.EndTime : sound.Duration;
+
+                    var playbackId = _audioPlayer.PlaySegment(sound.FilePath, sound.Volume, startTime, endTime, () =>
                     {
                         // Called when playback stops naturally
                         Dispatcher.Invoke(() =>
@@ -241,6 +246,21 @@ namespace GlobalAudioSoundboard
                         });
                     });
                     sound.PlaybackId = playbackId;
+                }
+            }
+        }
+
+        private void Edit_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is FrameworkElement element && element.Tag is SoundItem sound)
+            {
+                var editor = new WaveformEditor(sound) { Owner = this };
+                if (editor.ShowDialog() == true)
+                {
+                    // Update the sound with the new start and end times
+                    sound.StartTime = editor.StartTime;
+                    sound.EndTime = editor.EndTime;
+                    SaveSounds();
                 }
             }
         }
@@ -431,7 +451,12 @@ namespace GlobalAudioSoundboard
                         {
                             // Play the sound (allow multiple simultaneous sounds)
                             sound.IsPlaying = true;
-                            var playbackId = _audioPlayer.Play(sound.FilePath, sound.Volume, () =>
+
+                            // Use custom start/end times if set, otherwise play full audio
+                            TimeSpan startTime = sound.StartTime;
+                            TimeSpan endTime = sound.EndTime > TimeSpan.Zero ? sound.EndTime : sound.Duration;
+
+                            var playbackId = _audioPlayer.PlaySegment(sound.FilePath, sound.Volume, startTime, endTime, () =>
                             {
                                 Dispatcher.Invoke(() =>
                                 {

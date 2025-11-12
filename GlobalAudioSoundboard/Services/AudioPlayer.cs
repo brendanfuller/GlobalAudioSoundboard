@@ -92,6 +92,11 @@ namespace GlobalAudioSoundboard.Services
 
         public string Play(string filePath, float volume, Action? onPlaybackStopped = null)
         {
+            return PlaySegment(filePath, volume, TimeSpan.Zero, TimeSpan.Zero, onPlaybackStopped);
+        }
+
+        public string PlaySegment(string filePath, float volume, TimeSpan startTime, TimeSpan endTime, Action? onPlaybackStopped = null)
+        {
             if (!File.Exists(filePath))
                 return string.Empty;
 
@@ -108,11 +113,24 @@ namespace GlobalAudioSoundboard.Services
                 {
                     var audioFileReader = new AudioFileReader(filePath);
 
+                    // Set position to start time if specified
+                    if (startTime > TimeSpan.Zero)
+                    {
+                        audioFileReader.CurrentTime = startTime;
+                    }
+
                     // Get the device-specific volume multiplier
                     float deviceVolume = _deviceVolumes.ContainsKey(deviceNumber) ? _deviceVolumes[deviceNumber] : 1.0f;
 
                     // Apply both the sound volume and device volume
                     audioFileReader.Volume = Math.Clamp(volume * deviceVolume, 0f, 1f);
+
+                    // If end time is specified, create a trimmed provider
+                    NAudio.Wave.ISampleProvider provider = audioFileReader;
+                    if (endTime > TimeSpan.Zero && endTime < audioFileReader.TotalTime)
+                    {
+                        provider = new TrimmedAudioProvider(audioFileReader, startTime, endTime);
+                    }
 
                     var outputDevice = new WaveOutEvent();
 
@@ -122,7 +140,7 @@ namespace GlobalAudioSoundboard.Services
                         outputDevice.DeviceNumber = deviceNumber;
                     }
 
-                    outputDevice.Init(audioFileReader);
+                    outputDevice.Init(provider);
                     outputDevice.PlaybackStopped += (sender, e) => OnPlaybackStopped(playback.Id, sender, e);
 
                     playback.Readers.Add(audioFileReader);
@@ -245,5 +263,40 @@ namespace GlobalAudioSoundboard.Services
     {
         public int DeviceNumber { get; set; }
         public string Name { get; set; } = string.Empty;
+    }
+
+    // Helper class to trim audio to a specific time range
+    internal class TrimmedAudioProvider : NAudio.Wave.ISampleProvider
+    {
+        private readonly NAudio.Wave.ISampleProvider _source;
+        private readonly long _startSample;
+        private readonly long _endSample;
+        private long _currentSample;
+
+        public TrimmedAudioProvider(NAudio.Wave.ISampleProvider source, TimeSpan startTime, TimeSpan endTime)
+        {
+            _source = source;
+
+            // Calculate sample positions
+            _startSample = (long)(startTime.TotalSeconds * source.WaveFormat.SampleRate) * source.WaveFormat.Channels;
+            _endSample = (long)(endTime.TotalSeconds * source.WaveFormat.SampleRate) * source.WaveFormat.Channels;
+            _currentSample = _startSample;
+        }
+
+        public NAudio.Wave.WaveFormat WaveFormat => _source.WaveFormat;
+
+        public int Read(float[] buffer, int offset, int count)
+        {
+            // Check if we've reached the end
+            if (_currentSample >= _endSample)
+                return 0;
+
+            // Limit read to not exceed end time
+            long samplesToRead = Math.Min(count, _endSample - _currentSample);
+            int samplesRead = _source.Read(buffer, offset, (int)samplesToRead);
+
+            _currentSample += samplesRead;
+            return samplesRead;
+        }
     }
 }

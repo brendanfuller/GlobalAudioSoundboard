@@ -15,6 +15,8 @@ namespace GlobalAudioSoundboard.Models
         private int _hotkeyVirtualKey;
         private bool _isPlaying;
         private string? _playbackId;
+        private TimeSpan _startTime = TimeSpan.Zero;
+        private TimeSpan _endTime = TimeSpan.Zero;
 
         public string Id { get; set; } = Guid.NewGuid().ToString();
 
@@ -76,6 +78,18 @@ namespace GlobalAudioSoundboard.Models
         {
             get => _hotkeyVirtualKey;
             set { _hotkeyVirtualKey = value; OnPropertyChanged(); }
+        }
+
+        public TimeSpan StartTime
+        {
+            get => _startTime;
+            set { _startTime = value; OnPropertyChanged(); }
+        }
+
+        public TimeSpan EndTime
+        {
+            get => _endTime;
+            set { _endTime = value; OnPropertyChanged(); }
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
