@@ -49,10 +49,23 @@ namespace GlobalAudioSoundboard.Models
         public TimeSpan Duration
         {
             get => _duration;
-            set { _duration = value; OnPropertyChanged(); OnPropertyChanged(nameof(DurationString)); }
+            set { _duration = value; OnPropertyChanged(); OnPropertyChanged(nameof(DurationString)); OnPropertyChanged(nameof(EffectiveDuration)); }
         }
 
-        public string DurationString => Duration.ToString(@"mm\:ss");
+        // Returns the actual playback duration (accounting for start/end times)
+        public TimeSpan EffectiveDuration
+        {
+            get
+            {
+                if (_endTime > TimeSpan.Zero && _startTime < _endTime)
+                {
+                    return _endTime - _startTime;
+                }
+                return _duration;
+            }
+        }
+
+        public string DurationString => EffectiveDuration.ToString(@"mm\:ss");
 
         public float Volume
         {
@@ -83,13 +96,13 @@ namespace GlobalAudioSoundboard.Models
         public TimeSpan StartTime
         {
             get => _startTime;
-            set { _startTime = value; OnPropertyChanged(); }
+            set { _startTime = value; OnPropertyChanged(); OnPropertyChanged(nameof(EffectiveDuration)); OnPropertyChanged(nameof(DurationString)); }
         }
 
         public TimeSpan EndTime
         {
             get => _endTime;
-            set { _endTime = value; OnPropertyChanged(); }
+            set { _endTime = value; OnPropertyChanged(); OnPropertyChanged(nameof(EffectiveDuration)); OnPropertyChanged(nameof(DurationString)); }
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

@@ -417,9 +417,8 @@ namespace GlobalAudioSoundboard
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            // Update the sound's duration to reflect the edited selection
-            _sound.Duration = EndTime - StartTime;
-
+            // Start and end times are already saved to the sound item
+            // The EffectiveDuration property will automatically calculate the display duration
             DialogResult = true;
             Close();
         }
