@@ -156,7 +156,7 @@ namespace GlobalAudioSoundboard.Services
 
                 return playback.Id;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // Clean up on error
                 foreach (var device in playback.OutputDevices)

@@ -125,7 +125,7 @@ namespace GlobalAudioSoundboard.Services
 
                 return settings;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 var defaultSettings = new AppSettings();
                 defaultSettings.OutputDeviceNumbers = new List<int> { -1 };
