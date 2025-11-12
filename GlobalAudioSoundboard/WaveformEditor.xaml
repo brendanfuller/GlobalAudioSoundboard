@@ -202,13 +202,39 @@
             <StackPanel Grid.Column="1"
                         Orientation="Horizontal"
                         HorizontalAlignment="Center">
-                <Button Content="▶ Preview Selection"
+                <Button Content="▶ Play Preview"
                         Click="Preview_Click"
                         Padding="20,10"
-                        Margin="0,0,10,0"/>
+                        Margin="0,0,10,0"
+                        Background="#4CAF50">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                            <Setter Property="Background" Value="#4CAF50"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#45a049"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
                 <Button Content="■ Stop"
                         Click="Stop_Click"
-                        Padding="20,10"/>
+                        Padding="20,10"
+                        Background="#F44336">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                            <Setter Property="Background" Value="#F44336"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#da190b"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
             </StackPanel>
         </Grid>
 
@@ -219,7 +245,20 @@
             <Button Content="Save"
                     Click="Save_Click"
                     Padding="25,10"
-                    Margin="0,0,10,0"/>
+                    Margin="0,0,10,0"
+                    Background="#4CAF50">
+                <Button.Style>
+                    <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                        <Setter Property="Background" Value="#4CAF50"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#45a049"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
             <Button Content="Cancel"
                     Click="Cancel_Click"
                     Padding="25,10"/>

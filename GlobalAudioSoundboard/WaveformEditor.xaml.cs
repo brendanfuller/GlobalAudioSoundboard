@@ -50,12 +50,14 @@ namespace GlobalAudioSoundboard
             // Setup position update timer
             _positionTimer = new DispatcherTimer
             {
-                Interval = TimeSpan.FromMilliseconds(50) // Update 20 times per second
+                Interval = TimeSpan.FromMilliseconds(16) // Update ~60 times per second
             };
             _positionTimer.Tick += PositionTimer_Tick;
 
             // Setup volume slider
             VolumeSlider.ValueChanged += VolumeSlider_ValueChanged;
+            // Initialize volume percentage text
+            VolumePercentText.Text = "100%";
 
             Loaded += WaveformEditor_Loaded;
             Closing += WaveformEditor_Closing;
