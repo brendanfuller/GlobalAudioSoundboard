@@ -49,9 +49,9 @@ namespace GlobalAudioSoundboard
             ThemeManager.ApplyTheme(this);
 
             // Setup position update timer
-            _positionTimer = new DispatcherTimer
+            _positionTimer = new DispatcherTimer(DispatcherPriority.Render)
             {
-                Interval = TimeSpan.FromMilliseconds(16) // Update ~60 times per second
+                Interval = TimeSpan.FromMilliseconds(8) // Update ~120 times per second
             };
             _positionTimer.Tick += PositionTimer_Tick;
 
@@ -244,7 +244,7 @@ namespace GlobalAudioSoundboard
 
             RightOverlay.Width = Math.Max(0, width - endX);
             RightOverlay.Height = height;
-            Canvas.SetLeft(RightOverlay, endX);
+            Canvas.SetRight(RightOverlay, 0);
             Canvas.SetTop(RightOverlay, 0);
         }
 

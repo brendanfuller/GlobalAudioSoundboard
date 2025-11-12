@@ -83,7 +83,7 @@
                 <!-- Right Gray Overlay (after end) -->
                 <Rectangle x:Name="RightOverlay"
                            Fill="#80000000"
-                           HorizontalAlignment="Left"
+                           HorizontalAlignment="Right"
                            VerticalAlignment="Stretch"
                            IsHitTestVisible="False"/>
 
