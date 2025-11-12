@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="128" cy="128" r="120" fill="#2196F3"/>
+
+  <!-- Speaker body -->
+  <path d="M 80 90 L 110 90 L 140 60 L 140 196 L 110 166 L 80 166 Z" fill="white"/>
+
+  <!-- Sound waves -->
+  <path d="M 160 100 Q 175 100 175 128 Q 175 156 160 156"
+        stroke="white" stroke-width="8" fill="none" stroke-linecap="round"/>
+  <path d="M 180 80 Q 200 80 200 128 Q 200 176 180 176"
+        stroke="white" stroke-width="8" fill="none" stroke-linecap="round"/>
+
+  <!-- Keyboard key hint (small) -->
+  <rect x="155" y="185" width="35" height="35" rx="5" fill="white" opacity="0.9"/>
+  <text x="172.5" y="210" font-family="Arial, sans-serif" font-size="20" font-weight="bold"
+        text-anchor="middle" fill="#2196F3">F5</text>
+</svg>
