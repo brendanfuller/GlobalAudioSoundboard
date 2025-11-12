@@ -10,7 +10,7 @@ namespace GlobalAudioSoundboard.Services
     public class ConfigManager
     {
         private static readonly string AppDataFolder = Path.Combine(
-            AppDomain.CurrentDomain.BaseDirectory, "Data");
+            AppDomain.CurrentDomain.BaseDirectory, "SoundboardData");
         private static readonly string SoundsFolder = Path.Combine(AppDataFolder, "Sounds");
         private static readonly string ConfigFile = Path.Combine(AppDataFolder, "config.json");
         private static readonly string SettingsFile = Path.Combine(AppDataFolder, "settings.json");
