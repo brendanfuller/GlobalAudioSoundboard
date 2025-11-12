@@ -237,12 +237,15 @@ namespace GlobalAudioSoundboard
             EndMarker.Y2 = height;
 
             // Update gray overlays
-            LeftOverlay.Width = startX;
+            LeftOverlay.Width = Math.Max(0, startX);
             LeftOverlay.Height = height;
+            Canvas.SetLeft(LeftOverlay, 0);
+            Canvas.SetTop(LeftOverlay, 0);
 
-            RightOverlay.Width = width - endX;
+            RightOverlay.Width = Math.Max(0, width - endX);
             RightOverlay.Height = height;
             Canvas.SetLeft(RightOverlay, endX);
+            Canvas.SetTop(RightOverlay, 0);
         }
 
         private void WaveformCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

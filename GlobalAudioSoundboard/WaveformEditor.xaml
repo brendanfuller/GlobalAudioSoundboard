@@ -76,11 +76,15 @@
                 <!-- Left Gray Overlay (before start) -->
                 <Rectangle x:Name="LeftOverlay"
                            Fill="#80000000"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Stretch"
                            IsHitTestVisible="False"/>
 
                 <!-- Right Gray Overlay (after end) -->
                 <Rectangle x:Name="RightOverlay"
                            Fill="#80000000"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Stretch"
                            IsHitTestVisible="False"/>
 
                 <!-- Start Time Marker -->
