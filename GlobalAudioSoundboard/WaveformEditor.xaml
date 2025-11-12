@@ -5,11 +5,11 @@
         Height="500"
         Width="800"
         WindowStartupLocation="CenterOwner"
-        Background="#1e1e1e">
+        Background="{DynamicResource BackgroundColor}">
     <Window.Resources>
         <Style TargetType="Button">
-            <Setter Property="Background" Value="#2d2d30"/>
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="{DynamicResource SurfaceColor}"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextColor}"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Padding" Value="15,8"/>
             <Setter Property="FontSize" Value="14"/>
@@ -27,7 +27,7 @@
             </Setter>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#3e3e42"/>
+                    <Setter Property="Background" Value="{DynamicResource ItemBackgroundColor}"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -48,20 +48,20 @@
                    x:Name="TitleText"
                    FontSize="20"
                    FontWeight="Bold"
-                   Foreground="White"
+                   Foreground="{DynamicResource TextColor}"
                    Margin="0,0,0,20"/>
 
         <!-- Duration Info -->
         <TextBlock Grid.Row="1"
                    x:Name="DurationText"
                    FontSize="14"
-                   Foreground="#cccccc"
+                   Foreground="{DynamicResource SecondaryTextColor}"
                    Margin="0,0,0,10"/>
 
         <!-- Waveform Canvas -->
         <Border Grid.Row="2"
-                Background="#252526"
-                BorderBrush="#3e3e42"
+                Background="{DynamicResource ItemBackgroundColor}"
+                BorderBrush="{DynamicResource BorderColor}"
                 BorderThickness="1"
                 CornerRadius="4"
                 Margin="0,0,0,20">
@@ -110,7 +110,7 @@
 
             <StackPanel Grid.Column="0">
                 <TextBlock Text="Start Time"
-                           Foreground="#cccccc"
+                           Foreground="{DynamicResource SecondaryTextColor}"
                            FontSize="12"
                            Margin="0,0,0,5"/>
                 <Grid>
@@ -120,9 +120,9 @@
                     </Grid.ColumnDefinitions>
                     <TextBox x:Name="StartTimeTextBox"
                              Grid.Column="0"
-                             Background="#2d2d30"
-                             Foreground="White"
-                             BorderBrush="#3e3e42"
+                             Background="{DynamicResource SurfaceColor}"
+                             Foreground="{DynamicResource TextColor}"
+                             BorderBrush="{DynamicResource BorderColor}"
                              Padding="8"
                              FontSize="14"
                              TextChanged="StartTimeTextBox_TextChanged"/>
@@ -136,7 +136,7 @@
 
             <StackPanel Grid.Column="2">
                 <TextBlock Text="End Time"
-                           Foreground="#cccccc"
+                           Foreground="{DynamicResource SecondaryTextColor}"
                            FontSize="12"
                            Margin="0,0,0,5"/>
                 <Grid>
@@ -146,9 +146,9 @@
                     </Grid.ColumnDefinitions>
                     <TextBox x:Name="EndTimeTextBox"
                              Grid.Column="0"
-                             Background="#2d2d30"
-                             Foreground="White"
-                             BorderBrush="#3e3e42"
+                             Background="{DynamicResource SurfaceColor}"
+                             Foreground="{DynamicResource TextColor}"
+                             BorderBrush="{DynamicResource BorderColor}"
                              Padding="8"
                              FontSize="14"
                              TextChanged="EndTimeTextBox_TextChanged"/>
@@ -176,7 +176,7 @@
                         Orientation="Horizontal"
                         Margin="0,0,20,0">
                 <TextBlock Text="Preview Volume"
-                           Foreground="#cccccc"
+                           Foreground="{DynamicResource SecondaryTextColor}"
                            FontSize="12"
                            VerticalAlignment="Center"
                            Margin="0,0,10,0"/>
@@ -193,7 +193,7 @@
                 <TextBlock x:Name="VolumePercentText"
                            Text="100%"
                            FontSize="12"
-                           Foreground="#cccccc"
+                           Foreground="{DynamicResource SecondaryTextColor}"
                            VerticalAlignment="Center"
                            Width="40"/>
             </StackPanel>
