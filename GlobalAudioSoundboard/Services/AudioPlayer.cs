@@ -172,6 +172,19 @@ namespace GlobalAudioSoundboard.Services
             }
         }
 
+        public TimeSpan? GetPlaybackPosition(string playbackId)
+        {
+            lock (_playbackLock)
+            {
+                var playback = _activePlaybacks.FirstOrDefault(p => p.Id == playbackId);
+                if (playback == null || playback.Readers.Count == 0)
+                    return null;
+
+                // Return the position of the first reader (all should be synchronized)
+                return playback.Readers[0].CurrentTime;
+            }
+        }
+
         public void Stop(string playbackId)
         {
             lock (_playbackLock)

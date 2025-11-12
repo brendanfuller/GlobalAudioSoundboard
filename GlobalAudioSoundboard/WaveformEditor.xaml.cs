@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using GlobalAudioSoundboard.Models;
 using GlobalAudioSoundboard.Services;
 using NAudio.Wave;
@@ -19,6 +20,8 @@ namespace GlobalAudioSoundboard
         private bool _isDraggingEnd = false;
         private TimeSpan _originalStartTime;
         private TimeSpan _originalEndTime;
+        private string? _currentPlaybackId;
+        private DispatcherTimer? _positionTimer;
 
         public TimeSpan StartTime { get; private set; }
         public TimeSpan EndTime { get; private set; }
@@ -44,6 +47,16 @@ namespace GlobalAudioSoundboard
 
             ThemeManager.ApplyTheme(this);
 
+            // Setup position update timer
+            _positionTimer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromMilliseconds(50) // Update 20 times per second
+            };
+            _positionTimer.Tick += PositionTimer_Tick;
+
+            // Setup volume slider
+            VolumeSlider.ValueChanged += VolumeSlider_ValueChanged;
+
             Loaded += WaveformEditor_Loaded;
             Closing += WaveformEditor_Closing;
         }
@@ -56,7 +69,47 @@ namespace GlobalAudioSoundboard
 
         private void WaveformEditor_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
         {
+            _positionTimer?.Stop();
             _audioPlayer.Dispose();
+        }
+
+        private void PositionTimer_Tick(object? sender, EventArgs e)
+        {
+            if (_currentPlaybackId == null)
+            {
+                PositionMarker.Visibility = Visibility.Collapsed;
+                _positionTimer?.Stop();
+                return;
+            }
+
+            var position = _audioPlayer.GetPlaybackPosition(_currentPlaybackId);
+            if (position == null)
+            {
+                // Playback has stopped
+                PositionMarker.Visibility = Visibility.Collapsed;
+                _positionTimer?.Stop();
+                _currentPlaybackId = null;
+                return;
+            }
+
+            UpdatePositionMarker(position.Value);
+        }
+
+        private void UpdatePositionMarker(TimeSpan currentPosition)
+        {
+            double width = WaveformCanvas.ActualWidth;
+            double height = WaveformCanvas.ActualHeight;
+
+            if (width <= 0 || height <= 0)
+                return;
+
+            // Calculate position relative to total duration
+            double positionX = (currentPosition.TotalSeconds / _sound.Duration.TotalSeconds) * width;
+
+            PositionMarker.X1 = positionX;
+            PositionMarker.X2 = positionX;
+            PositionMarker.Y2 = height;
+            PositionMarker.Visibility = Visibility.Visible;
         }
 
         private void LoadWaveform()
@@ -304,12 +357,39 @@ namespace GlobalAudioSoundboard
         private void Preview_Click(object sender, RoutedEventArgs e)
         {
             _audioPlayer.StopAll();
-            _audioPlayer.PlaySegment(_sound.FilePath, _sound.Volume, StartTime, EndTime, null);
+            float previewVolume = (float)VolumeSlider.Value;
+            _currentPlaybackId = _audioPlayer.PlaySegment(_sound.FilePath, previewVolume, StartTime, EndTime, OnPreviewStopped);
+
+            if (!string.IsNullOrEmpty(_currentPlaybackId))
+            {
+                _positionTimer?.Start();
+            }
         }
 
         private void Stop_Click(object sender, RoutedEventArgs e)
         {
             _audioPlayer.StopAll();
+            _positionTimer?.Stop();
+            _currentPlaybackId = null;
+            PositionMarker.Visibility = Visibility.Collapsed;
+        }
+
+        private void OnPreviewStopped()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                _positionTimer?.Stop();
+                _currentPlaybackId = null;
+                PositionMarker.Visibility = Visibility.Collapsed;
+            });
+        }
+
+        private void VolumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (VolumePercentText != null) // Null check for initialization
+            {
+                VolumePercentText.Text = $"{(int)(e.NewValue * 100)}%";
+            }
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)

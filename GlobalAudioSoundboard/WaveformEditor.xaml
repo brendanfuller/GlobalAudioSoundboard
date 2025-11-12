@@ -162,18 +162,55 @@
         </Grid>
 
         <!-- Playback Controls -->
-        <StackPanel Grid.Row="4"
-                    Orientation="Horizontal"
-                    HorizontalAlignment="Center"
-                    Margin="0,0,0,20">
-            <Button Content="▶ Preview Selection"
-                    Click="Preview_Click"
-                    Padding="20,10"
-                    Margin="0,0,10,0"/>
-            <Button Content="■ Stop"
-                    Click="Stop_Click"
-                    Padding="20,10"/>
-        </StackPanel>
+        <Grid Grid.Row="4" Margin="0,0,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Volume Control -->
+            <StackPanel Grid.Column="0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal"
+                        Margin="0,0,20,0">
+                <TextBlock Text="Preview Volume"
+                           Foreground="#cccccc"
+                           FontSize="12"
+                           VerticalAlignment="Center"
+                           Margin="0,0,10,0"/>
+                <Slider x:Name="VolumeSlider"
+                        Width="150"
+                        Minimum="0"
+                        Maximum="1"
+                        Value="1"
+                        TickFrequency="0.01"
+                        IsSnapToTickEnabled="False"
+                        VerticalAlignment="Center"
+                        IsMoveToPointEnabled="True"
+                        Margin="0,0,8,0"/>
+                <TextBlock x:Name="VolumePercentText"
+                           Text="100%"
+                           FontSize="12"
+                           Foreground="#cccccc"
+                           VerticalAlignment="Center"
+                           Width="40"/>
+            </StackPanel>
+
+            <!-- Play/Stop Buttons -->
+            <StackPanel Grid.Column="1"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center">
+                <Button Content="▶ Preview Selection"
+                        Click="Preview_Click"
+                        Padding="20,10"
+                        Margin="0,0,10,0"/>
+                <Button Content="■ Stop"
+                        Click="Stop_Click"
+                        Padding="20,10"/>
+            </StackPanel>
+        </Grid>
 
         <!-- Action Buttons -->
         <StackPanel Grid.Row="5"
